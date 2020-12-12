@@ -1,4 +1,3 @@
-#define __STDC_WANT_LIB_EXT1__ 1
 #include "struct.h"
 
 #include <stdio.h>
@@ -26,9 +25,9 @@ void Show_Main_Menu() {
 void Show_Dish_Menu() {
 	int i;
 	printf("*********欢迎选购本店菜**********\n");
-	printf("菜编号\t菜名\t菜单价\n");
+	printf("菜编号\t\t\t菜名\t菜单价\n");
 	for (i = 1; i < ldish; ++i)
-		printf("%d\t%s\t%.2lf\n", i, dishes[i]._name, dishes[i]._price);
+		printf("%d\t%16s\t%.2lf\n", i, dishes[i]._name, dishes[i]._price);
 }
 
 void initTables() {
@@ -111,7 +110,6 @@ void handle() {
 			continue;
 		printf("无效字符\n");
 		printf("请输入来客数量:\n");
-		continue;
 	}
 	int id = searchTable(num);
 	if (id == -1) {
@@ -141,7 +139,7 @@ void handle() {
 			pre = head = curr;
 		}
 
-		int i = 1, num = 0;
+		int i = 1, n = 0;
 		do {
 			Show_Dish_Menu();
 			printf("请输入菜的编号,按0结束输入:");
@@ -159,8 +157,8 @@ void handle() {
 				break;
 			}
 
-			curr->_dish[num++] = i;	 //结尾有个-1
-			if (num >= DISH_NUM_MAX) {
+			curr->_dish[n++] = i;	 //结尾有个-1
+			if (n >= DISH_NUM_MAX) {
 				printf("你点的菜已达到上限\n");
 				break;
 			}
@@ -218,17 +216,17 @@ void pay() {
 		save_inform(curr, i);
 		tables[id]._is_full = 0;
 	}
-	order *pre = head, *j = head;
+	order *pree = head, *j = head;
 	for (; curr != j; j = j->_next)	 //与外pre无关
 	{
-		pre = j;
+		pree = j;
 	}
 	if (j == head)
 		;
 	else {
 		order* temp = curr->_next;
 		free(curr);
-		pre->_next = temp;
+		pree->_next = temp;
 	}
 }
 
@@ -246,11 +244,9 @@ void save_in_list(double pay) {
 }
 
 void save_inform(order* curr, int count) {
-	FILE*  fp;
-	time_t timer;
-	int	   i = 0;
-	timer	 = time(NULL);
-	if ((fp = fopen("data/histories.txt", "a")) == NULL) {
+	FILE*  fp = fopen("data/histories.txt", "a");
+	time_t timer = time(NULL);
+	if (fp == NULL) {
 		printf("操作失败\n");
 		exit(1);
 	}
@@ -266,7 +262,7 @@ void save_inform(order* curr, int count) {
 
 int Pass_Word() {
 	char currpass[129];
-	char ch;
+	int ch;//实际上是char
 	do {
 		while(getchar() != '\n') continue;//清除缓冲区
 		printf("请输入密码\n");
@@ -288,8 +284,8 @@ int Pass_Word() {
 
 void List_Management() {
 
-	FILE* fp;
-	if ((fp = fopen("data/accounts.txt", "r")) == NULL) {
+	FILE* fp = fopen("data/accounts.txt", "r");
+	if (fp == NULL) {
 		printf("操作失败\n");
 		exit(1);
 	}
@@ -329,12 +325,12 @@ void initPassword() {
 			exit(1);
 		}
 		printf("请设置你的密码或留空以使用初始密码114514\n");
-		char ch;
+		int ch;//实际上是char
 		if ((ch = getchar()) == '\n') {
 			fprintf(temp, "114514");
 		}
 		else {
-			password[0] = ch;
+			password[0] = (char)ch;
 			scanf("%s", password + 1);	// password[0]是getchar()里的
 			fprintf(temp, "%s", password);
 		}
@@ -375,12 +371,8 @@ void ModifyPW() {
 }
 
 void Observe() {
-	FILE*  fp;
-	double pay;
-	char   str[25];
-	int	   i = 0;
-	int	   j = 0;
-	if ((fp = fopen("data/accounts.txt", "r")) == NULL) {
+	FILE*  fp = fopen("data/accounts.txt", "r");
+	if (fp == NULL) {
 		printf("操作失败\n");
 		exit(1);
 	}

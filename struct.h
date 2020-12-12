@@ -8,7 +8,6 @@
 //可以优化
 #define DISH_NAME_MAX 15
 #define DISH_NUM_MAX  25
-#define N 100  // 一单最多多少菜
 #ifdef _WIN32
 #include <direct.h>		//for mkdir rmdir
 #include <io.h>      	//for access
@@ -42,7 +41,6 @@ void Show_Main_Menu();
 
 typedef struct ORDER {
 	struct ORDER* _next;
-	int           _count;
 	int			  _dish[DISH_NUM_MAX + 1];	 //记录菜的索引 // 保留一位做判断//最大是DISH_NAME_MAX
 } order;					 
 
@@ -69,7 +67,7 @@ void initDishes();
 //pass people's count return index (-1 means no match result ) 
 //(-2 means no table can contain)
 int searchTable(int num);
-int MaxCapacity();// return tables max capacity
+
 //大函数
 void handle();//一层封装
 void pay();
@@ -84,64 +82,5 @@ void run();
 void Get_Rank();
 void Save_Dishes_Changes();
 void Save_Tables_Changes();
-/*
-| 函数原型                            | 功能说明                                                 |
-| :---------------------------------- | :------------------------------------------------------- |
-| void Table_Init(void)               | 餐桌信息初始化                                           |
-| void Load_Dish(void)                | 从文件中读取菜谱                                         |
-| void Dish_Menu(void)                | 打印菜单                                                 |
-| void Display(int)                   | 打印菜信息，参数为菜的编号                               |
-| int search(void)                    | 查找匹配型号的餐桌，返回餐桌号                           |
-| ORDER *CreateOne(int)               | 创建一个客户节点，参数为餐桌编号，返回订单节点指针       |
-| ORDER *Dish_Order(ORDER *，ORDER *) | 点菜，参数分别为订单头指针和客户节点指针，返回订单头指针 |
-| void Save_Inform(ORDER *，int)      | 消费历史记录，参数分别为客户节点指针和点菜的总数         |
-| void saveInList(float)              | 将客户消费金额存入账目，参数为消费额                     |
-| ORDER *Payment(ORDER *)             | 客户结账，参数为订单头指针，返回订单头指针               |
-| int Pass_Word(void)                 | 密码验证，返回密码验证的结果1或 0                        |
-| void ModifyPW()                     | 修改账目密码                                             |
-| void List_Management(void)          | 账本管理                                                 |
-| void Observe(void)                  | 查看账目                                                 |
-| void ListMenu(void)                 | 账目管理菜单                                             |
-| void Main_Menu(void)                | 显示系统菜单                                             |
-| void Menu_select(void)              | 完成系统各项功能                                         |
-| void Get_Rank(void)                 | 对菜进行统计排名                                         |
 
-
-void Load_Table();	//餐桌信息初始化
-void Load_Dish();	//从文件中读取菜谱
-void Dish_Menu();	//打印菜单
-
-void   Display(int);	//打印菜信息，参数为菜的编号                               |
-void   search();		//查找匹配型号的餐桌,返回餐桌编号                          |
-ORDER* CreateOne(int);	// 创建一个客户节点，参数为餐桌编号，返回订单节点指针 |
-ORDER* Dish_Order(ORDER*,
-				  ORDER*);	//| 点菜，参数分别为订单头指针和客户节点指针，返回订单头指针 |
-void   Save_Inform(ORDER*,
-				   int);   //   | 消费历史记录，参数分别为客户节点指针和点菜的总数 |
-void   saveInList(float);  //          | 将客户消费金额存入账目，参数为消费额 |
-ORDER* Pay(ORDER*);		   //         | 客户结账，参数为订单头指针，返回订单头指针 |
-int	   Pass_Word();		   //             | 密码验证，返回密码验证的结果1或 0 |
-void   ModifyPW();		   //            | 修改账目密码 |
-void   List_Management();  //        | 账本管理 |
-void   Observe();		   //             | 查看账目 |
-void   ListMenu();		   //             | 账目管理菜单 |
-void   Show_Main_Menu();   //           | 显示系统菜单 |
-// void Menu_select();     //           | 完成系统各项功能 |
-void Get_Rank();  //            | 对菜进行统计排名 |
-*/
 #endif	// LIST_STRUCT_H
-// telegram
-// everyday
-// instant messaging, video calling
-// provide bot to do everything you want and api which is easy to use
-// api ( Application programming interface)
-// stikers and channels
-// Bots are Telegram accounts operated by programs. They can respond to messages or mentions, 
-// can be invited into groups and can be integrated into other programs
-// Channels are a form of one-way messaging where 
-// admins are able to post messages but other users are not.
-// Stickers are cloud-based, high-resolution images intended to provide more expressive emoji
-// Secret chats
-// every chat is on the cloud and never be deleted
-// unless the group's administrator or you decide to delete it
-// 
